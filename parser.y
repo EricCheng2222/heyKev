@@ -1,10 +1,12 @@
 %{
+#include <cstdlib>
 #include <stdio.h>
 #include <stdlib.h>
 #include "symbolTable.c"
 #include "y.tab.h"
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
 
@@ -101,10 +103,30 @@ int expressionStart = expressionCalEnd;
 %token  GT_OP
 %token  NOT_OP
 
+%token HEY
+%token KEV
+%token CAN
+%token YOU
+%token PLEASE
+%token WHAT
+%token TIME
+%token IS
+%token IT
+%token QUESTIONMARK
+%token SHOW
+%token NORMALSTRING
+%token ANALYZE
+%token ME
+%token CALCULATE
+%token BMI
+%token IP
+%token MY
+%token STOCK
+
 %start program
 %%
 
-program : HEY KEV COMMA command | HEY KEV COMMA polite command;
+program : HEY KEV COMMA {printf("r1, s1\n");}command | HEY KEV COMMA polite command;
 
 polite : CAN YOU | CAN YOU PLEASE;
 
@@ -117,7 +139,7 @@ timeFunc : WHAT TIME IS IT questionmark | TIME;
 questionmark : QUESTIONMARK | ;
 
 //stock
-stockFunc : SHOW me stock NORMALSTRING stock | ANALYZE stock NORMALSTRING stock;
+stockFunc : show me stock NORMALSTRING stock | ANALYZE stock NORMALSTRING stock;
 
 me : ME | ;
 stock : STOCK | ;
@@ -128,9 +150,8 @@ bmiFunc : CALCULATE my BMI ;
 my : MY | ;
 
 //ip
-ipFunc : show my IP ;
+ipFunc : show my IP {system("./ipFunc");} ;
 show : SHOW | ;
-
 
 
 %%

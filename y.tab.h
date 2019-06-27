@@ -1,9 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.3.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
-   Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,9 +29,6 @@
 
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
-
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
 # define YY_YY_Y_TAB_H_INCLUDED
@@ -96,7 +92,26 @@ extern int yydebug;
     ASSIGN_OP = 302,
     LT_OP = 303,
     GT_OP = 304,
-    NOT_OP = 305
+    NOT_OP = 305,
+    HEY = 306,
+    KEV = 307,
+    CAN = 308,
+    YOU = 309,
+    PLEASE = 310,
+    WHAT = 311,
+    TIME = 312,
+    IS = 313,
+    IT = 314,
+    QUESTIONMARK = 315,
+    SHOW = 316,
+    NORMALSTRING = 317,
+    ANALYZE = 318,
+    ME = 319,
+    CALCULATE = 320,
+    BMI = 321,
+    IP = 322,
+    MY = 323,
+    STOCK = 324
   };
 #endif
 /* Tokens.  */
@@ -148,6 +163,25 @@ extern int yydebug;
 #define LT_OP 303
 #define GT_OP 304
 #define NOT_OP 305
+#define HEY 306
+#define KEV 307
+#define CAN 308
+#define YOU 309
+#define PLEASE 310
+#define WHAT 311
+#define TIME 312
+#define IS 313
+#define IT 314
+#define QUESTIONMARK 315
+#define SHOW 316
+#define NORMALSTRING 317
+#define ANALYZE 318
+#define ME 319
+#define CALCULATE 320
+#define BMI 321
+#define IP 322
+#define MY 323
+#define STOCK 324
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

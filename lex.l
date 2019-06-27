@@ -60,9 +60,40 @@ id *new_id();
 
 %%
 
+[Hh][Ee][Yy] {
+	return HEY;
+}
+[Kk][Ee][Vv] {
+	return KEV;
+}
+[Cc][Aa][Nn] {
+	return CAN;
+}
+[Yy][Oo][Uu] {
+	return YOU;
+}
+[Pp][Ll][Ee][Aa][Ss][Ee] {
+	return PLEASE;
+}
+[Ii][Pp] {
+	return IP;
+}
+[Ss][Hh][Oo][Ww] {
+	return SHOW;
+}
+[Mm][Yy] {
+	return MY;
+}
+"?" {
+	return QUESTIONMARK;
+}
+"," {
+	return COMMA;
+}
 " " {
     printf("%s\n", strContent);
     strcpy(strContent, "");
+    //return NORMALSTRING;
 }
 
 . {
@@ -71,6 +102,7 @@ id *new_id();
 
 %%
 
+/*
 int main( int argc, char **argv )
 {
 	if( argc != 2 ) {
@@ -98,4 +130,5 @@ int main( int argc, char **argv )
 
   	exit(0);
 }
+*/
 
