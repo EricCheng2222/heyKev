@@ -1,0 +1,4367 @@
+Terminals unused in grammar
+
+   BOOLEAN
+
+
+Rules useless in parser due to conflicts
+
+   78 $@21: %empty
+
+
+State 51 conflicts: 1 shift/reduce
+State 217 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 $@1: %empty
+
+    2 $@2: %empty
+
+    3 program: $@1 decl_list funct_def $@2 decl_and_def_list
+
+    4 decl_list: decl_list var_decl
+    5          | decl_list const_decl
+    6          | decl_list funct_decl
+    7          | %empty
+
+    8 decl_and_def_list: decl_and_def_list var_decl
+    9                  | decl_and_def_list const_decl
+   10                  | decl_and_def_list funct_decl
+   11                  | decl_and_def_list funct_def
+   12                  | %empty
+
+   13 $@3: %empty
+
+   14 funct_def: scalar_type ID L_PAREN R_PAREN compound_statement $@3
+
+   15 $@4: %empty
+
+   16 funct_def: scalar_type ID L_PAREN parameter_list R_PAREN compound_statement $@4
+
+   17 $@5: %empty
+
+   18 $@6: %empty
+
+   19 $@7: %empty
+
+   20 funct_def: VOID ID L_PAREN R_PAREN $@5 compound_statement $@6 $@7
+
+   21 $@8: %empty
+
+   22 $@9: %empty
+
+   23 $@10: %empty
+
+   24 funct_def: VOID ID L_PAREN parameter_list R_PAREN $@8 compound_statement $@9 $@10
+
+   25 funct_decl: scalar_type ID L_PAREN R_PAREN SEMICOLON
+   26           | scalar_type ID L_PAREN parameter_list R_PAREN SEMICOLON
+   27           | VOID ID L_PAREN R_PAREN SEMICOLON
+   28           | VOID ID L_PAREN parameter_list R_PAREN SEMICOLON
+
+   29 parameter_list: parameter_list COMMA scalar_type ID
+   30               | parameter_list COMMA scalar_type array_decl
+   31               | scalar_type array_decl
+   32               | scalar_type ID
+
+   33 var_decl: scalar_type identifier_list SEMICOLON
+
+   34 identifier_list: identifier_list COMMA ID
+   35                | identifier_list COMMA ID ASSIGN_OP Logical_expression
+   36                | identifier_list COMMA array_decl ASSIGN_OP initial_array
+   37                | identifier_list COMMA array_decl
+   38                | array_decl ASSIGN_OP initial_array
+   39                | array_decl
+   40                | ID ASSIGN_OP Logical_expression
+   41                | ID
+
+   42 $@11: %empty
+
+   43 initial_array: $@11 L_BRACE literal_list R_BRACE
+
+   44 literal_list: literal_list COMMA Logical_expression
+   45             | Logical_expression
+   46             | %empty
+
+   47 $@12: %empty
+
+   48 const_decl: CONST $@12 scalar_type const_list SEMICOLON
+
+   49 const_list: const_list COMMA ID ASSIGN_OP sign_literal_const
+   50           | ID ASSIGN_OP sign_literal_const
+
+   51 $@13: %empty
+
+   52 array_decl: ID $@13 dim
+
+   53 dim: dim ML_BRACE INT_CONST MR_BRACE
+   54    | ML_BRACE INT_CONST MR_BRACE
+
+   55 $@14: %empty
+
+   56 compound_statement: L_BRACE $@14 var_const_stmt_list R_BRACE
+
+   57 var_const_stmt_list: var_const_stmt_list statement
+   58                    | var_const_stmt_list var_decl
+   59                    | var_const_stmt_list const_decl
+   60                    | %empty
+
+   61 statement: compound_statement
+   62          | simple_statement
+   63          | conditional_statement
+   64          | while_statement
+   65          | for_statement
+   66          | function_invoke_statement
+   67          | jump_statement
+
+   68 $@15: %empty
+
+   69 $@16: %empty
+
+   70 simple_statement: variable_reference $@15 ASSIGN_OP $@16 Logical_expression SEMICOLON
+
+   71 $@17: %empty
+
+   72 simple_statement: PRINT Logical_expression SEMICOLON $@17
+
+   73 $@18: %empty
+
+   74 $@19: %empty
+
+   75 simple_statement: READ variable_reference $@18 SEMICOLON $@19
+
+   76 $@20: %empty
+
+   77 conditional_statement: IF L_PAREN Logical_expression R_PAREN $@20 L_BRACE var_const_stmt_list R_BRACE
+
+   78 $@21: %empty
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+   80 $@22: %empty
+
+   81 $@23: %empty
+
+   82 $@24: %empty
+
+   83 $@25: %empty
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN L_BRACE $@23 var_const_stmt_list $@24 R_BRACE $@25
+
+   85 $@26: %empty
+
+   86 $@27: %empty
+
+   87 $@28: %empty
+
+   88 $@29: %empty
+
+   89 $@30: %empty
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+   91 $@31: %empty
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+   93 initial_expression_list: initial_expression
+   94                        | %empty
+
+   95 $@32: %empty
+
+   96 $@33: %empty
+
+   97 initial_expression: initial_expression COMMA variable_reference $@32 ASSIGN_OP $@33 Logical_expression
+   98                   | initial_expression COMMA Logical_expression
+   99                   | Logical_expression
+
+  100 $@34: %empty
+
+  101 $@35: %empty
+
+  102 initial_expression: variable_reference $@34 ASSIGN_OP $@35 Logical_expression
+
+  103 control_expression_list: control_expression
+  104                        | %empty
+
+  105 $@36: %empty
+
+  106 $@37: %empty
+
+  107 control_expression: control_expression COMMA variable_reference $@36 ASSIGN_OP $@37 Logical_expression
+  108                   | control_expression COMMA Logical_expression
+  109                   | Logical_expression
+
+  110 $@38: %empty
+
+  111 $@39: %empty
+
+  112 control_expression: variable_reference $@38 ASSIGN_OP $@39 Logical_expression
+
+  113 increment_expression_list: increment_expression
+  114                          | %empty
+
+  115 $@40: %empty
+
+  116 $@41: %empty
+
+  117 increment_expression: increment_expression COMMA variable_reference $@40 ASSIGN_OP $@41 Logical_expression
+  118                     | increment_expression COMMA Logical_expression
+  119                     | Logical_expression
+
+  120 $@42: %empty
+
+  121 $@43: %empty
+
+  122 increment_expression: variable_reference $@42 ASSIGN_OP $@43 Logical_expression
+
+  123 $@44: %empty
+
+  124 $@45: %empty
+
+  125 function_invoke_statement: ID L_PAREN $@44 logical_expression_list R_PAREN SEMICOLON $@45
+
+  126 $@46: %empty
+
+  127 function_invoke_statement: ID L_PAREN R_PAREN SEMICOLON $@46
+
+  128 jump_statement: RETURN Logical_expression SEMICOLON
+  129               | jump_loop_statement
+
+  130 jump_loop_statement: CONTINUE SEMICOLON
+  131                    | BREAK SEMICOLON
+
+  132 variable_reference: array_list
+  133                   | ID
+
+  134 Logical_expression: logical_expression
+
+  135 $@47: %empty
+
+  136 logical_expression: logical_expression OR_OP $@47 logical_term
+  137                   | logical_term
+
+  138 $@48: %empty
+
+  139 logical_term: logical_term AND_OP $@48 logical_factor
+  140             | logical_factor
+
+  141 $@49: %empty
+
+  142 logical_factor: NOT_OP $@49 logical_factor
+  143               | relation_expression
+
+  144 relation_expression: relation_expression relation_operator arithmetic_expression
+  145                    | arithmetic_expression
+
+  146 relation_operator: LT_OP
+  147                  | LE_OP
+  148                  | EQ_OP
+  149                  | GE_OP
+  150                  | GT_OP
+  151                  | NE_OP
+
+  152 $@50: %empty
+
+  153 arithmetic_expression: arithmetic_expression ADD_OP $@50 term
+
+  154 $@51: %empty
+
+  155 arithmetic_expression: arithmetic_expression SUB_OP $@51 term
+  156                      | term
+
+  157 $@52: %empty
+
+  158 term: term MUL_OP $@52 factor
+
+  159 $@53: %empty
+
+  160 term: term DIV_OP $@53 factor
+
+  161 $@54: %empty
+
+  162 term: term MOD_OP $@54 factor
+  163     | factor
+
+  164 factor: sign_literal_const
+  165       | element
+
+  166 $@55: %empty
+
+  167 element: SUB_OP $@55 element
+  168        | variable_reference
+
+  169 $@56: %empty
+
+  170 element: L_PAREN $@56 logical_expression R_PAREN
+  171        | ID L_PAREN logical_expression_list R_PAREN
+  172        | ID L_PAREN R_PAREN
+
+  173 logical_expression_list: logical_expression_list COMMA logical_expression
+  174                        | logical_expression
+
+  175 $@57: %empty
+
+  176 array_list: ID $@57 dimension
+
+  177 dimension: dimension ML_BRACE Logical_expression MR_BRACE
+  178          | ML_BRACE Logical_expression MR_BRACE
+
+  179 scalar_type: INT
+  180            | DOUBLE
+  181            | STRING
+  182            | BOOL
+  183            | FLOAT
+
+  184 sign_literal_const: SUB_OP sign_literal_const
+  185                   | literal_const
+
+  186 literal_const: INT_CONST
+  187              | FLOAT_CONST
+  188              | SCIENTIFIC
+  189              | STR_CONST
+  190              | TRUE
+  191              | FALSE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ID (258) 14 16 20 24 25 26 27 28 29 32 34 35 40 41 49 50 52 125 127
+    133 171 172 176
+INT_CONST (259) 53 54 186
+FLOAT_CONST (260) 187
+SCIENTIFIC (261) 188
+STR_CONST (262) 189
+LE_OP (263) 147
+NE_OP (264) 151
+GE_OP (265) 149
+EQ_OP (266) 148
+AND_OP (267) 139
+OR_OP (268) 136
+READ (269) 75
+BOOLEAN (270)
+WHILE (271) 84 90
+DO (272) 90
+IF (273) 77 79
+ELSE (274) 79
+TRUE (275) 190
+FALSE (276) 191
+FOR (277) 92
+INT (278) 179
+PRINT (279) 72
+BOOL (280) 182
+VOID (281) 20 24 27 28
+FLOAT (282) 183
+DOUBLE (283) 180
+STRING (284) 181
+CONTINUE (285) 130
+BREAK (286) 131
+RETURN (287) 128
+CONST (288) 48
+L_PAREN (289) 14 16 20 24 25 26 27 28 77 79 84 90 92 125 127 170 171
+    172
+R_PAREN (290) 14 16 20 24 25 26 27 28 77 79 84 90 92 125 127 170 171
+    172
+COMMA (291) 29 30 34 35 36 37 44 49 97 98 107 108 117 118 173
+SEMICOLON (292) 25 26 27 28 33 48 70 72 75 90 92 125 127 128 130 131
+ML_BRACE (293) 53 54 177 178
+MR_BRACE (294) 53 54 177 178
+L_BRACE (295) 43 56 77 79 84 90 92
+R_BRACE (296) 43 56 77 79 84 90 92
+ADD_OP (297) 153
+SUB_OP (298) 155 167 184
+MUL_OP (299) 158
+DIV_OP (300) 160
+MOD_OP (301) 162
+ASSIGN_OP (302) 35 36 38 40 49 50 70 97 102 107 112 117 122
+LT_OP (303) 146
+GT_OP (304) 150
+NOT_OP (305) 142
+
+
+Nonterminals, with rules where they appear
+
+$accept (51)
+    on left: 0
+program (52)
+    on left: 3, on right: 0
+$@1 (53)
+    on left: 1, on right: 3
+$@2 (54)
+    on left: 2, on right: 3
+decl_list (55)
+    on left: 4 5 6 7, on right: 3 4 5 6
+decl_and_def_list (56)
+    on left: 8 9 10 11 12, on right: 3 8 9 10 11
+funct_def (57)
+    on left: 14 16 20 24, on right: 3 11
+$@3 (58)
+    on left: 13, on right: 14
+$@4 (59)
+    on left: 15, on right: 16
+$@5 (60)
+    on left: 17, on right: 20
+$@6 (61)
+    on left: 18, on right: 20
+$@7 (62)
+    on left: 19, on right: 20
+$@8 (63)
+    on left: 21, on right: 24
+$@9 (64)
+    on left: 22, on right: 24
+$@10 (65)
+    on left: 23, on right: 24
+funct_decl (66)
+    on left: 25 26 27 28, on right: 6 10
+parameter_list (67)
+    on left: 29 30 31 32, on right: 16 24 26 28 29 30
+var_decl (68)
+    on left: 33, on right: 4 8 58
+identifier_list (69)
+    on left: 34 35 36 37 38 39 40 41, on right: 33 34 35 36 37
+initial_array (70)
+    on left: 43, on right: 36 38
+$@11 (71)
+    on left: 42, on right: 43
+literal_list (72)
+    on left: 44 45 46, on right: 43 44
+const_decl (73)
+    on left: 48, on right: 5 9 59
+$@12 (74)
+    on left: 47, on right: 48
+const_list (75)
+    on left: 49 50, on right: 48 49
+array_decl (76)
+    on left: 52, on right: 30 31 36 37 38 39
+$@13 (77)
+    on left: 51, on right: 52
+dim (78)
+    on left: 53 54, on right: 52 53
+compound_statement (79)
+    on left: 56, on right: 14 16 20 24 61
+$@14 (80)
+    on left: 55, on right: 56
+var_const_stmt_list (81)
+    on left: 57 58 59 60, on right: 56 57 58 59 77 79 84 90 92
+statement (82)
+    on left: 61 62 63 64 65 66 67, on right: 57
+simple_statement (83)
+    on left: 70 72 75, on right: 62
+$@15 (84)
+    on left: 68, on right: 70
+$@16 (85)
+    on left: 69, on right: 70
+$@17 (86)
+    on left: 71, on right: 72
+$@18 (87)
+    on left: 73, on right: 75
+$@19 (88)
+    on left: 74, on right: 75
+conditional_statement (89)
+    on left: 77 79, on right: 63
+$@20 (90)
+    on left: 76, on right: 77
+$@21 (91)
+    on left: 78, on right: 79
+while_statement (92)
+    on left: 84 90, on right: 64
+$@22 (93)
+    on left: 80, on right: 84
+$@23 (94)
+    on left: 81, on right: 84
+$@24 (95)
+    on left: 82, on right: 84
+$@25 (96)
+    on left: 83, on right: 84
+$@26 (97)
+    on left: 85, on right: 90
+$@27 (98)
+    on left: 86, on right: 90
+$@28 (99)
+    on left: 87, on right: 90
+$@29 (100)
+    on left: 88, on right: 90
+$@30 (101)
+    on left: 89, on right: 90
+for_statement (102)
+    on left: 92, on right: 65
+$@31 (103)
+    on left: 91, on right: 92
+initial_expression_list (104)
+    on left: 93 94, on right: 92
+initial_expression (105)
+    on left: 97 98 99 102, on right: 93 97 98
+$@32 (106)
+    on left: 95, on right: 97
+$@33 (107)
+    on left: 96, on right: 97
+$@34 (108)
+    on left: 100, on right: 102
+$@35 (109)
+    on left: 101, on right: 102
+control_expression_list (110)
+    on left: 103 104, on right: 92
+control_expression (111)
+    on left: 107 108 109 112, on right: 103 107 108
+$@36 (112)
+    on left: 105, on right: 107
+$@37 (113)
+    on left: 106, on right: 107
+$@38 (114)
+    on left: 110, on right: 112
+$@39 (115)
+    on left: 111, on right: 112
+increment_expression_list (116)
+    on left: 113 114, on right: 92
+increment_expression (117)
+    on left: 117 118 119 122, on right: 113 117 118
+$@40 (118)
+    on left: 115, on right: 117
+$@41 (119)
+    on left: 116, on right: 117
+$@42 (120)
+    on left: 120, on right: 122
+$@43 (121)
+    on left: 121, on right: 122
+function_invoke_statement (122)
+    on left: 125 127, on right: 66
+$@44 (123)
+    on left: 123, on right: 125
+$@45 (124)
+    on left: 124, on right: 125
+$@46 (125)
+    on left: 126, on right: 127
+jump_statement (126)
+    on left: 128 129, on right: 67
+jump_loop_statement (127)
+    on left: 130 131, on right: 129
+variable_reference (128)
+    on left: 132 133, on right: 70 75 97 102 107 112 117 122 168
+Logical_expression (129)
+    on left: 134, on right: 35 40 44 45 70 72 77 79 84 90 97 98 99
+    102 107 108 109 112 117 118 119 122 128 177 178
+logical_expression (130)
+    on left: 136 137, on right: 134 136 170 173 174
+$@47 (131)
+    on left: 135, on right: 136
+logical_term (132)
+    on left: 139 140, on right: 136 137 139
+$@48 (133)
+    on left: 138, on right: 139
+logical_factor (134)
+    on left: 142 143, on right: 139 140 142
+$@49 (135)
+    on left: 141, on right: 142
+relation_expression (136)
+    on left: 144 145, on right: 143 144
+relation_operator (137)
+    on left: 146 147 148 149 150 151, on right: 144
+arithmetic_expression (138)
+    on left: 153 155 156, on right: 144 145 153 155
+$@50 (139)
+    on left: 152, on right: 153
+$@51 (140)
+    on left: 154, on right: 155
+term (141)
+    on left: 158 160 162 163, on right: 153 155 156 158 160 162
+$@52 (142)
+    on left: 157, on right: 158
+$@53 (143)
+    on left: 159, on right: 160
+$@54 (144)
+    on left: 161, on right: 162
+factor (145)
+    on left: 164 165, on right: 158 160 162 163
+element (146)
+    on left: 167 168 170 171 172, on right: 165 167
+$@55 (147)
+    on left: 166, on right: 167
+$@56 (148)
+    on left: 169, on right: 170
+logical_expression_list (149)
+    on left: 173 174, on right: 125 171 173
+array_list (150)
+    on left: 176, on right: 132
+$@57 (151)
+    on left: 175, on right: 176
+dimension (152)
+    on left: 177 178, on right: 176 177
+scalar_type (153)
+    on left: 179 180 181 182 183, on right: 14 16 25 26 29 30 31 32
+    33 48
+sign_literal_const (154)
+    on left: 184 185, on right: 49 50 164 184
+literal_const (155)
+    on left: 186 187 188 189 190 191, on right: 185
+
+
+State 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 1 ($@1)
+
+    program  go to state 1
+    $@1      go to state 2
+
+
+State 1
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    3 program: $@1 . decl_list funct_def $@2 decl_and_def_list
+
+    $default  reduce using rule 7 (decl_list)
+
+    decl_list  go to state 4
+
+
+State 3
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 4
+
+    3 program: $@1 decl_list . funct_def $@2 decl_and_def_list
+    4 decl_list: decl_list . var_decl
+    5          | decl_list . const_decl
+    6          | decl_list . funct_decl
+
+    INT     shift, and go to state 5
+    BOOL    shift, and go to state 6
+    VOID    shift, and go to state 7
+    FLOAT   shift, and go to state 8
+    DOUBLE  shift, and go to state 9
+    STRING  shift, and go to state 10
+    CONST   shift, and go to state 11
+
+    funct_def    go to state 12
+    funct_decl   go to state 13
+    var_decl     go to state 14
+    const_decl   go to state 15
+    scalar_type  go to state 16
+
+
+State 5
+
+  179 scalar_type: INT .
+
+    $default  reduce using rule 179 (scalar_type)
+
+
+State 6
+
+  182 scalar_type: BOOL .
+
+    $default  reduce using rule 182 (scalar_type)
+
+
+State 7
+
+   20 funct_def: VOID . ID L_PAREN R_PAREN $@5 compound_statement $@6 $@7
+   24          | VOID . ID L_PAREN parameter_list R_PAREN $@8 compound_statement $@9 $@10
+   27 funct_decl: VOID . ID L_PAREN R_PAREN SEMICOLON
+   28           | VOID . ID L_PAREN parameter_list R_PAREN SEMICOLON
+
+    ID  shift, and go to state 17
+
+
+State 8
+
+  183 scalar_type: FLOAT .
+
+    $default  reduce using rule 183 (scalar_type)
+
+
+State 9
+
+  180 scalar_type: DOUBLE .
+
+    $default  reduce using rule 180 (scalar_type)
+
+
+State 10
+
+  181 scalar_type: STRING .
+
+    $default  reduce using rule 181 (scalar_type)
+
+
+State 11
+
+   48 const_decl: CONST . $@12 scalar_type const_list SEMICOLON
+
+    $default  reduce using rule 47 ($@12)
+
+    $@12  go to state 18
+
+
+State 12
+
+    3 program: $@1 decl_list funct_def . $@2 decl_and_def_list
+
+    $default  reduce using rule 2 ($@2)
+
+    $@2  go to state 19
+
+
+State 13
+
+    6 decl_list: decl_list funct_decl .
+
+    $default  reduce using rule 6 (decl_list)
+
+
+State 14
+
+    4 decl_list: decl_list var_decl .
+
+    $default  reduce using rule 4 (decl_list)
+
+
+State 15
+
+    5 decl_list: decl_list const_decl .
+
+    $default  reduce using rule 5 (decl_list)
+
+
+State 16
+
+   14 funct_def: scalar_type . ID L_PAREN R_PAREN compound_statement $@3
+   16          | scalar_type . ID L_PAREN parameter_list R_PAREN compound_statement $@4
+   25 funct_decl: scalar_type . ID L_PAREN R_PAREN SEMICOLON
+   26           | scalar_type . ID L_PAREN parameter_list R_PAREN SEMICOLON
+   33 var_decl: scalar_type . identifier_list SEMICOLON
+
+    ID  shift, and go to state 20
+
+    identifier_list  go to state 21
+    array_decl       go to state 22
+
+
+State 17
+
+   20 funct_def: VOID ID . L_PAREN R_PAREN $@5 compound_statement $@6 $@7
+   24          | VOID ID . L_PAREN parameter_list R_PAREN $@8 compound_statement $@9 $@10
+   27 funct_decl: VOID ID . L_PAREN R_PAREN SEMICOLON
+   28           | VOID ID . L_PAREN parameter_list R_PAREN SEMICOLON
+
+    L_PAREN  shift, and go to state 23
+
+
+State 18
+
+   48 const_decl: CONST $@12 . scalar_type const_list SEMICOLON
+
+    INT     shift, and go to state 5
+    BOOL    shift, and go to state 6
+    FLOAT   shift, and go to state 8
+    DOUBLE  shift, and go to state 9
+    STRING  shift, and go to state 10
+
+    scalar_type  go to state 24
+
+
+State 19
+
+    3 program: $@1 decl_list funct_def $@2 . decl_and_def_list
+
+    $default  reduce using rule 12 (decl_and_def_list)
+
+    decl_and_def_list  go to state 25
+
+
+State 20
+
+   14 funct_def: scalar_type ID . L_PAREN R_PAREN compound_statement $@3
+   16          | scalar_type ID . L_PAREN parameter_list R_PAREN compound_statement $@4
+   25 funct_decl: scalar_type ID . L_PAREN R_PAREN SEMICOLON
+   26           | scalar_type ID . L_PAREN parameter_list R_PAREN SEMICOLON
+   40 identifier_list: ID . ASSIGN_OP Logical_expression
+   41                | ID .
+   52 array_decl: ID . $@13 dim
+
+    L_PAREN    shift, and go to state 26
+    ASSIGN_OP  shift, and go to state 27
+
+    ML_BRACE  reduce using rule 51 ($@13)
+    $default  reduce using rule 41 (identifier_list)
+
+    $@13  go to state 28
+
+
+State 21
+
+   33 var_decl: scalar_type identifier_list . SEMICOLON
+   34 identifier_list: identifier_list . COMMA ID
+   35                | identifier_list . COMMA ID ASSIGN_OP Logical_expression
+   36                | identifier_list . COMMA array_decl ASSIGN_OP initial_array
+   37                | identifier_list . COMMA array_decl
+
+    COMMA      shift, and go to state 29
+    SEMICOLON  shift, and go to state 30
+
+
+State 22
+
+   38 identifier_list: array_decl . ASSIGN_OP initial_array
+   39                | array_decl .
+
+    ASSIGN_OP  shift, and go to state 31
+
+    $default  reduce using rule 39 (identifier_list)
+
+
+State 23
+
+   20 funct_def: VOID ID L_PAREN . R_PAREN $@5 compound_statement $@6 $@7
+   24          | VOID ID L_PAREN . parameter_list R_PAREN $@8 compound_statement $@9 $@10
+   27 funct_decl: VOID ID L_PAREN . R_PAREN SEMICOLON
+   28           | VOID ID L_PAREN . parameter_list R_PAREN SEMICOLON
+
+    INT      shift, and go to state 5
+    BOOL     shift, and go to state 6
+    FLOAT    shift, and go to state 8
+    DOUBLE   shift, and go to state 9
+    STRING   shift, and go to state 10
+    R_PAREN  shift, and go to state 32
+
+    parameter_list  go to state 33
+    scalar_type     go to state 34
+
+
+State 24
+
+   48 const_decl: CONST $@12 scalar_type . const_list SEMICOLON
+
+    ID  shift, and go to state 35
+
+    const_list  go to state 36
+
+
+State 25
+
+    3 program: $@1 decl_list funct_def $@2 decl_and_def_list .
+    8 decl_and_def_list: decl_and_def_list . var_decl
+    9                  | decl_and_def_list . const_decl
+   10                  | decl_and_def_list . funct_decl
+   11                  | decl_and_def_list . funct_def
+
+    INT     shift, and go to state 5
+    BOOL    shift, and go to state 6
+    VOID    shift, and go to state 7
+    FLOAT   shift, and go to state 8
+    DOUBLE  shift, and go to state 9
+    STRING  shift, and go to state 10
+    CONST   shift, and go to state 11
+
+    $default  reduce using rule 3 (program)
+
+    funct_def    go to state 37
+    funct_decl   go to state 38
+    var_decl     go to state 39
+    const_decl   go to state 40
+    scalar_type  go to state 16
+
+
+State 26
+
+   14 funct_def: scalar_type ID L_PAREN . R_PAREN compound_statement $@3
+   16          | scalar_type ID L_PAREN . parameter_list R_PAREN compound_statement $@4
+   25 funct_decl: scalar_type ID L_PAREN . R_PAREN SEMICOLON
+   26           | scalar_type ID L_PAREN . parameter_list R_PAREN SEMICOLON
+
+    INT      shift, and go to state 5
+    BOOL     shift, and go to state 6
+    FLOAT    shift, and go to state 8
+    DOUBLE   shift, and go to state 9
+    STRING   shift, and go to state 10
+    R_PAREN  shift, and go to state 41
+
+    parameter_list  go to state 42
+    scalar_type     go to state 34
+
+
+State 27
+
+   40 identifier_list: ID ASSIGN_OP . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 54
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 28
+
+   52 array_decl: ID $@13 . dim
+
+    ML_BRACE  shift, and go to state 66
+
+    dim  go to state 67
+
+
+State 29
+
+   34 identifier_list: identifier_list COMMA . ID
+   35                | identifier_list COMMA . ID ASSIGN_OP Logical_expression
+   36                | identifier_list COMMA . array_decl ASSIGN_OP initial_array
+   37                | identifier_list COMMA . array_decl
+
+    ID  shift, and go to state 68
+
+    array_decl  go to state 69
+
+
+State 30
+
+   33 var_decl: scalar_type identifier_list SEMICOLON .
+
+    $default  reduce using rule 33 (var_decl)
+
+
+State 31
+
+   38 identifier_list: array_decl ASSIGN_OP . initial_array
+
+    $default  reduce using rule 42 ($@11)
+
+    initial_array  go to state 70
+    $@11           go to state 71
+
+
+State 32
+
+   20 funct_def: VOID ID L_PAREN R_PAREN . $@5 compound_statement $@6 $@7
+   27 funct_decl: VOID ID L_PAREN R_PAREN . SEMICOLON
+
+    SEMICOLON  shift, and go to state 72
+
+    $default  reduce using rule 17 ($@5)
+
+    $@5  go to state 73
+
+
+State 33
+
+   24 funct_def: VOID ID L_PAREN parameter_list . R_PAREN $@8 compound_statement $@9 $@10
+   28 funct_decl: VOID ID L_PAREN parameter_list . R_PAREN SEMICOLON
+   29 parameter_list: parameter_list . COMMA scalar_type ID
+   30               | parameter_list . COMMA scalar_type array_decl
+
+    R_PAREN  shift, and go to state 74
+    COMMA    shift, and go to state 75
+
+
+State 34
+
+   31 parameter_list: scalar_type . array_decl
+   32               | scalar_type . ID
+
+    ID  shift, and go to state 76
+
+    array_decl  go to state 77
+
+
+State 35
+
+   50 const_list: ID . ASSIGN_OP sign_literal_const
+
+    ASSIGN_OP  shift, and go to state 78
+
+
+State 36
+
+   48 const_decl: CONST $@12 scalar_type const_list . SEMICOLON
+   49 const_list: const_list . COMMA ID ASSIGN_OP sign_literal_const
+
+    COMMA      shift, and go to state 79
+    SEMICOLON  shift, and go to state 80
+
+
+State 37
+
+   11 decl_and_def_list: decl_and_def_list funct_def .
+
+    $default  reduce using rule 11 (decl_and_def_list)
+
+
+State 38
+
+   10 decl_and_def_list: decl_and_def_list funct_decl .
+
+    $default  reduce using rule 10 (decl_and_def_list)
+
+
+State 39
+
+    8 decl_and_def_list: decl_and_def_list var_decl .
+
+    $default  reduce using rule 8 (decl_and_def_list)
+
+
+State 40
+
+    9 decl_and_def_list: decl_and_def_list const_decl .
+
+    $default  reduce using rule 9 (decl_and_def_list)
+
+
+State 41
+
+   14 funct_def: scalar_type ID L_PAREN R_PAREN . compound_statement $@3
+   25 funct_decl: scalar_type ID L_PAREN R_PAREN . SEMICOLON
+
+    SEMICOLON  shift, and go to state 81
+    L_BRACE    shift, and go to state 82
+
+    compound_statement  go to state 83
+
+
+State 42
+
+   16 funct_def: scalar_type ID L_PAREN parameter_list . R_PAREN compound_statement $@4
+   26 funct_decl: scalar_type ID L_PAREN parameter_list . R_PAREN SEMICOLON
+   29 parameter_list: parameter_list . COMMA scalar_type ID
+   30               | parameter_list . COMMA scalar_type array_decl
+
+    R_PAREN  shift, and go to state 84
+    COMMA    shift, and go to state 75
+
+
+State 43
+
+  133 variable_reference: ID .
+  171 element: ID . L_PAREN logical_expression_list R_PAREN
+  172        | ID . L_PAREN R_PAREN
+  176 array_list: ID . $@57 dimension
+
+    L_PAREN  shift, and go to state 85
+
+    ML_BRACE  reduce using rule 175 ($@57)
+    $default  reduce using rule 133 (variable_reference)
+
+    $@57  go to state 86
+
+
+State 44
+
+  186 literal_const: INT_CONST .
+
+    $default  reduce using rule 186 (literal_const)
+
+
+State 45
+
+  187 literal_const: FLOAT_CONST .
+
+    $default  reduce using rule 187 (literal_const)
+
+
+State 46
+
+  188 literal_const: SCIENTIFIC .
+
+    $default  reduce using rule 188 (literal_const)
+
+
+State 47
+
+  189 literal_const: STR_CONST .
+
+    $default  reduce using rule 189 (literal_const)
+
+
+State 48
+
+  190 literal_const: TRUE .
+
+    $default  reduce using rule 190 (literal_const)
+
+
+State 49
+
+  191 literal_const: FALSE .
+
+    $default  reduce using rule 191 (literal_const)
+
+
+State 50
+
+  170 element: L_PAREN . $@56 logical_expression R_PAREN
+
+    $default  reduce using rule 169 ($@56)
+
+    $@56  go to state 87
+
+
+State 51
+
+  167 element: SUB_OP . $@55 element
+  184 sign_literal_const: SUB_OP . sign_literal_const
+
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    SUB_OP       shift, and go to state 88
+
+    SUB_OP    [reduce using rule 166 ($@55)]
+    $default  reduce using rule 166 ($@55)
+
+    $@55                go to state 89
+    sign_literal_const  go to state 90
+    literal_const       go to state 65
+
+
+State 52
+
+  142 logical_factor: NOT_OP . $@49 logical_factor
+
+    $default  reduce using rule 141 ($@49)
+
+    $@49  go to state 91
+
+
+State 53
+
+  168 element: variable_reference .
+
+    $default  reduce using rule 168 (element)
+
+
+State 54
+
+   40 identifier_list: ID ASSIGN_OP Logical_expression .
+
+    $default  reduce using rule 40 (identifier_list)
+
+
+State 55
+
+  134 Logical_expression: logical_expression .
+  136 logical_expression: logical_expression . OR_OP $@47 logical_term
+
+    OR_OP  shift, and go to state 92
+
+    $default  reduce using rule 134 (Logical_expression)
+
+
+State 56
+
+  137 logical_expression: logical_term .
+  139 logical_term: logical_term . AND_OP $@48 logical_factor
+
+    AND_OP  shift, and go to state 93
+
+    $default  reduce using rule 137 (logical_expression)
+
+
+State 57
+
+  140 logical_term: logical_factor .
+
+    $default  reduce using rule 140 (logical_term)
+
+
+State 58
+
+  143 logical_factor: relation_expression .
+  144 relation_expression: relation_expression . relation_operator arithmetic_expression
+
+    LE_OP  shift, and go to state 94
+    NE_OP  shift, and go to state 95
+    GE_OP  shift, and go to state 96
+    EQ_OP  shift, and go to state 97
+    LT_OP  shift, and go to state 98
+    GT_OP  shift, and go to state 99
+
+    $default  reduce using rule 143 (logical_factor)
+
+    relation_operator  go to state 100
+
+
+State 59
+
+  145 relation_expression: arithmetic_expression .
+  153 arithmetic_expression: arithmetic_expression . ADD_OP $@50 term
+  155                      | arithmetic_expression . SUB_OP $@51 term
+
+    ADD_OP  shift, and go to state 101
+    SUB_OP  shift, and go to state 102
+
+    $default  reduce using rule 145 (relation_expression)
+
+
+State 60
+
+  156 arithmetic_expression: term .
+  158 term: term . MUL_OP $@52 factor
+  160     | term . DIV_OP $@53 factor
+  162     | term . MOD_OP $@54 factor
+
+    MUL_OP  shift, and go to state 103
+    DIV_OP  shift, and go to state 104
+    MOD_OP  shift, and go to state 105
+
+    $default  reduce using rule 156 (arithmetic_expression)
+
+
+State 61
+
+  163 term: factor .
+
+    $default  reduce using rule 163 (term)
+
+
+State 62
+
+  165 factor: element .
+
+    $default  reduce using rule 165 (factor)
+
+
+State 63
+
+  132 variable_reference: array_list .
+
+    $default  reduce using rule 132 (variable_reference)
+
+
+State 64
+
+  164 factor: sign_literal_const .
+
+    $default  reduce using rule 164 (factor)
+
+
+State 65
+
+  185 sign_literal_const: literal_const .
+
+    $default  reduce using rule 185 (sign_literal_const)
+
+
+State 66
+
+   54 dim: ML_BRACE . INT_CONST MR_BRACE
+
+    INT_CONST  shift, and go to state 106
+
+
+State 67
+
+   52 array_decl: ID $@13 dim .
+   53 dim: dim . ML_BRACE INT_CONST MR_BRACE
+
+    ML_BRACE  shift, and go to state 107
+
+    $default  reduce using rule 52 (array_decl)
+
+
+State 68
+
+   34 identifier_list: identifier_list COMMA ID .
+   35                | identifier_list COMMA ID . ASSIGN_OP Logical_expression
+   52 array_decl: ID . $@13 dim
+
+    ASSIGN_OP  shift, and go to state 108
+
+    ML_BRACE  reduce using rule 51 ($@13)
+    $default  reduce using rule 34 (identifier_list)
+
+    $@13  go to state 28
+
+
+State 69
+
+   36 identifier_list: identifier_list COMMA array_decl . ASSIGN_OP initial_array
+   37                | identifier_list COMMA array_decl .
+
+    ASSIGN_OP  shift, and go to state 109
+
+    $default  reduce using rule 37 (identifier_list)
+
+
+State 70
+
+   38 identifier_list: array_decl ASSIGN_OP initial_array .
+
+    $default  reduce using rule 38 (identifier_list)
+
+
+State 71
+
+   43 initial_array: $@11 . L_BRACE literal_list R_BRACE
+
+    L_BRACE  shift, and go to state 110
+
+
+State 72
+
+   27 funct_decl: VOID ID L_PAREN R_PAREN SEMICOLON .
+
+    $default  reduce using rule 27 (funct_decl)
+
+
+State 73
+
+   20 funct_def: VOID ID L_PAREN R_PAREN $@5 . compound_statement $@6 $@7
+
+    L_BRACE  shift, and go to state 82
+
+    compound_statement  go to state 111
+
+
+State 74
+
+   24 funct_def: VOID ID L_PAREN parameter_list R_PAREN . $@8 compound_statement $@9 $@10
+   28 funct_decl: VOID ID L_PAREN parameter_list R_PAREN . SEMICOLON
+
+    SEMICOLON  shift, and go to state 112
+
+    $default  reduce using rule 21 ($@8)
+
+    $@8  go to state 113
+
+
+State 75
+
+   29 parameter_list: parameter_list COMMA . scalar_type ID
+   30               | parameter_list COMMA . scalar_type array_decl
+
+    INT     shift, and go to state 5
+    BOOL    shift, and go to state 6
+    FLOAT   shift, and go to state 8
+    DOUBLE  shift, and go to state 9
+    STRING  shift, and go to state 10
+
+    scalar_type  go to state 114
+
+
+State 76
+
+   32 parameter_list: scalar_type ID .
+   52 array_decl: ID . $@13 dim
+
+    ML_BRACE  reduce using rule 51 ($@13)
+    $default  reduce using rule 32 (parameter_list)
+
+    $@13  go to state 28
+
+
+State 77
+
+   31 parameter_list: scalar_type array_decl .
+
+    $default  reduce using rule 31 (parameter_list)
+
+
+State 78
+
+   50 const_list: ID ASSIGN_OP . sign_literal_const
+
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    SUB_OP       shift, and go to state 88
+
+    sign_literal_const  go to state 115
+    literal_const       go to state 65
+
+
+State 79
+
+   49 const_list: const_list COMMA . ID ASSIGN_OP sign_literal_const
+
+    ID  shift, and go to state 116
+
+
+State 80
+
+   48 const_decl: CONST $@12 scalar_type const_list SEMICOLON .
+
+    $default  reduce using rule 48 (const_decl)
+
+
+State 81
+
+   25 funct_decl: scalar_type ID L_PAREN R_PAREN SEMICOLON .
+
+    $default  reduce using rule 25 (funct_decl)
+
+
+State 82
+
+   56 compound_statement: L_BRACE . $@14 var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 55 ($@14)
+
+    $@14  go to state 117
+
+
+State 83
+
+   14 funct_def: scalar_type ID L_PAREN R_PAREN compound_statement . $@3
+
+    $default  reduce using rule 13 ($@3)
+
+    $@3  go to state 118
+
+
+State 84
+
+   16 funct_def: scalar_type ID L_PAREN parameter_list R_PAREN . compound_statement $@4
+   26 funct_decl: scalar_type ID L_PAREN parameter_list R_PAREN . SEMICOLON
+
+    SEMICOLON  shift, and go to state 119
+    L_BRACE    shift, and go to state 82
+
+    compound_statement  go to state 120
+
+
+State 85
+
+  171 element: ID L_PAREN . logical_expression_list R_PAREN
+  172        | ID L_PAREN . R_PAREN
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    R_PAREN      shift, and go to state 121
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference       go to state 53
+    logical_expression       go to state 122
+    logical_term             go to state 56
+    logical_factor           go to state 57
+    relation_expression      go to state 58
+    arithmetic_expression    go to state 59
+    term                     go to state 60
+    factor                   go to state 61
+    element                  go to state 62
+    logical_expression_list  go to state 123
+    array_list               go to state 63
+    sign_literal_const       go to state 64
+    literal_const            go to state 65
+
+
+State 86
+
+  176 array_list: ID $@57 . dimension
+
+    ML_BRACE  shift, and go to state 124
+
+    dimension  go to state 125
+
+
+State 87
+
+  170 element: L_PAREN $@56 . logical_expression R_PAREN
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    logical_expression     go to state 126
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 88
+
+  184 sign_literal_const: SUB_OP . sign_literal_const
+
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    SUB_OP       shift, and go to state 88
+
+    sign_literal_const  go to state 90
+    literal_const       go to state 65
+
+
+State 89
+
+  167 element: SUB_OP $@55 . element
+
+    ID       shift, and go to state 43
+    L_PAREN  shift, and go to state 50
+    SUB_OP   shift, and go to state 127
+
+    variable_reference  go to state 53
+    element             go to state 128
+    array_list          go to state 63
+
+
+State 90
+
+  184 sign_literal_const: SUB_OP sign_literal_const .
+
+    $default  reduce using rule 184 (sign_literal_const)
+
+
+State 91
+
+  142 logical_factor: NOT_OP $@49 . logical_factor
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    logical_factor         go to state 129
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 92
+
+  136 logical_expression: logical_expression OR_OP . $@47 logical_term
+
+    $default  reduce using rule 135 ($@47)
+
+    $@47  go to state 130
+
+
+State 93
+
+  139 logical_term: logical_term AND_OP . $@48 logical_factor
+
+    $default  reduce using rule 138 ($@48)
+
+    $@48  go to state 131
+
+
+State 94
+
+  147 relation_operator: LE_OP .
+
+    $default  reduce using rule 147 (relation_operator)
+
+
+State 95
+
+  151 relation_operator: NE_OP .
+
+    $default  reduce using rule 151 (relation_operator)
+
+
+State 96
+
+  149 relation_operator: GE_OP .
+
+    $default  reduce using rule 149 (relation_operator)
+
+
+State 97
+
+  148 relation_operator: EQ_OP .
+
+    $default  reduce using rule 148 (relation_operator)
+
+
+State 98
+
+  146 relation_operator: LT_OP .
+
+    $default  reduce using rule 146 (relation_operator)
+
+
+State 99
+
+  150 relation_operator: GT_OP .
+
+    $default  reduce using rule 150 (relation_operator)
+
+
+State 100
+
+  144 relation_expression: relation_expression relation_operator . arithmetic_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+
+    variable_reference     go to state 53
+    arithmetic_expression  go to state 132
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 101
+
+  153 arithmetic_expression: arithmetic_expression ADD_OP . $@50 term
+
+    $default  reduce using rule 152 ($@50)
+
+    $@50  go to state 133
+
+
+State 102
+
+  155 arithmetic_expression: arithmetic_expression SUB_OP . $@51 term
+
+    $default  reduce using rule 154 ($@51)
+
+    $@51  go to state 134
+
+
+State 103
+
+  158 term: term MUL_OP . $@52 factor
+
+    $default  reduce using rule 157 ($@52)
+
+    $@52  go to state 135
+
+
+State 104
+
+  160 term: term DIV_OP . $@53 factor
+
+    $default  reduce using rule 159 ($@53)
+
+    $@53  go to state 136
+
+
+State 105
+
+  162 term: term MOD_OP . $@54 factor
+
+    $default  reduce using rule 161 ($@54)
+
+    $@54  go to state 137
+
+
+State 106
+
+   54 dim: ML_BRACE INT_CONST . MR_BRACE
+
+    MR_BRACE  shift, and go to state 138
+
+
+State 107
+
+   53 dim: dim ML_BRACE . INT_CONST MR_BRACE
+
+    INT_CONST  shift, and go to state 139
+
+
+State 108
+
+   35 identifier_list: identifier_list COMMA ID ASSIGN_OP . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 140
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 109
+
+   36 identifier_list: identifier_list COMMA array_decl ASSIGN_OP . initial_array
+
+    $default  reduce using rule 42 ($@11)
+
+    initial_array  go to state 141
+    $@11           go to state 71
+
+
+State 110
+
+   43 initial_array: $@11 L_BRACE . literal_list R_BRACE
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    $default  reduce using rule 46 (literal_list)
+
+    literal_list           go to state 142
+    variable_reference     go to state 53
+    Logical_expression     go to state 143
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 111
+
+   20 funct_def: VOID ID L_PAREN R_PAREN $@5 compound_statement . $@6 $@7
+
+    $default  reduce using rule 18 ($@6)
+
+    $@6  go to state 144
+
+
+State 112
+
+   28 funct_decl: VOID ID L_PAREN parameter_list R_PAREN SEMICOLON .
+
+    $default  reduce using rule 28 (funct_decl)
+
+
+State 113
+
+   24 funct_def: VOID ID L_PAREN parameter_list R_PAREN $@8 . compound_statement $@9 $@10
+
+    L_BRACE  shift, and go to state 82
+
+    compound_statement  go to state 145
+
+
+State 114
+
+   29 parameter_list: parameter_list COMMA scalar_type . ID
+   30               | parameter_list COMMA scalar_type . array_decl
+
+    ID  shift, and go to state 146
+
+    array_decl  go to state 147
+
+
+State 115
+
+   50 const_list: ID ASSIGN_OP sign_literal_const .
+
+    $default  reduce using rule 50 (const_list)
+
+
+State 116
+
+   49 const_list: const_list COMMA ID . ASSIGN_OP sign_literal_const
+
+    ASSIGN_OP  shift, and go to state 148
+
+
+State 117
+
+   56 compound_statement: L_BRACE $@14 . var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 60 (var_const_stmt_list)
+
+    var_const_stmt_list  go to state 149
+
+
+State 118
+
+   14 funct_def: scalar_type ID L_PAREN R_PAREN compound_statement $@3 .
+
+    $default  reduce using rule 14 (funct_def)
+
+
+State 119
+
+   26 funct_decl: scalar_type ID L_PAREN parameter_list R_PAREN SEMICOLON .
+
+    $default  reduce using rule 26 (funct_decl)
+
+
+State 120
+
+   16 funct_def: scalar_type ID L_PAREN parameter_list R_PAREN compound_statement . $@4
+
+    $default  reduce using rule 15 ($@4)
+
+    $@4  go to state 150
+
+
+State 121
+
+  172 element: ID L_PAREN R_PAREN .
+
+    $default  reduce using rule 172 (element)
+
+
+State 122
+
+  136 logical_expression: logical_expression . OR_OP $@47 logical_term
+  174 logical_expression_list: logical_expression .
+
+    OR_OP  shift, and go to state 92
+
+    $default  reduce using rule 174 (logical_expression_list)
+
+
+State 123
+
+  171 element: ID L_PAREN logical_expression_list . R_PAREN
+  173 logical_expression_list: logical_expression_list . COMMA logical_expression
+
+    R_PAREN  shift, and go to state 151
+    COMMA    shift, and go to state 152
+
+
+State 124
+
+  178 dimension: ML_BRACE . Logical_expression MR_BRACE
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 153
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 125
+
+  176 array_list: ID $@57 dimension .
+  177 dimension: dimension . ML_BRACE Logical_expression MR_BRACE
+
+    ML_BRACE  shift, and go to state 154
+
+    $default  reduce using rule 176 (array_list)
+
+
+State 126
+
+  136 logical_expression: logical_expression . OR_OP $@47 logical_term
+  170 element: L_PAREN $@56 logical_expression . R_PAREN
+
+    OR_OP    shift, and go to state 92
+    R_PAREN  shift, and go to state 155
+
+
+State 127
+
+  167 element: SUB_OP . $@55 element
+
+    $default  reduce using rule 166 ($@55)
+
+    $@55  go to state 89
+
+
+State 128
+
+  167 element: SUB_OP $@55 element .
+
+    $default  reduce using rule 167 (element)
+
+
+State 129
+
+  142 logical_factor: NOT_OP $@49 logical_factor .
+
+    $default  reduce using rule 142 (logical_factor)
+
+
+State 130
+
+  136 logical_expression: logical_expression OR_OP $@47 . logical_term
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    logical_term           go to state 156
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 131
+
+  139 logical_term: logical_term AND_OP $@48 . logical_factor
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    logical_factor         go to state 157
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 132
+
+  144 relation_expression: relation_expression relation_operator arithmetic_expression .
+  153 arithmetic_expression: arithmetic_expression . ADD_OP $@50 term
+  155                      | arithmetic_expression . SUB_OP $@51 term
+
+    ADD_OP  shift, and go to state 101
+    SUB_OP  shift, and go to state 102
+
+    $default  reduce using rule 144 (relation_expression)
+
+
+State 133
+
+  153 arithmetic_expression: arithmetic_expression ADD_OP $@50 . term
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+
+    variable_reference  go to state 53
+    term                go to state 158
+    factor              go to state 61
+    element             go to state 62
+    array_list          go to state 63
+    sign_literal_const  go to state 64
+    literal_const       go to state 65
+
+
+State 134
+
+  155 arithmetic_expression: arithmetic_expression SUB_OP $@51 . term
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+
+    variable_reference  go to state 53
+    term                go to state 159
+    factor              go to state 61
+    element             go to state 62
+    array_list          go to state 63
+    sign_literal_const  go to state 64
+    literal_const       go to state 65
+
+
+State 135
+
+  158 term: term MUL_OP $@52 . factor
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+
+    variable_reference  go to state 53
+    factor              go to state 160
+    element             go to state 62
+    array_list          go to state 63
+    sign_literal_const  go to state 64
+    literal_const       go to state 65
+
+
+State 136
+
+  160 term: term DIV_OP $@53 . factor
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+
+    variable_reference  go to state 53
+    factor              go to state 161
+    element             go to state 62
+    array_list          go to state 63
+    sign_literal_const  go to state 64
+    literal_const       go to state 65
+
+
+State 137
+
+  162 term: term MOD_OP $@54 . factor
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+
+    variable_reference  go to state 53
+    factor              go to state 162
+    element             go to state 62
+    array_list          go to state 63
+    sign_literal_const  go to state 64
+    literal_const       go to state 65
+
+
+State 138
+
+   54 dim: ML_BRACE INT_CONST MR_BRACE .
+
+    $default  reduce using rule 54 (dim)
+
+
+State 139
+
+   53 dim: dim ML_BRACE INT_CONST . MR_BRACE
+
+    MR_BRACE  shift, and go to state 163
+
+
+State 140
+
+   35 identifier_list: identifier_list COMMA ID ASSIGN_OP Logical_expression .
+
+    $default  reduce using rule 35 (identifier_list)
+
+
+State 141
+
+   36 identifier_list: identifier_list COMMA array_decl ASSIGN_OP initial_array .
+
+    $default  reduce using rule 36 (identifier_list)
+
+
+State 142
+
+   43 initial_array: $@11 L_BRACE literal_list . R_BRACE
+   44 literal_list: literal_list . COMMA Logical_expression
+
+    COMMA    shift, and go to state 164
+    R_BRACE  shift, and go to state 165
+
+
+State 143
+
+   45 literal_list: Logical_expression .
+
+    $default  reduce using rule 45 (literal_list)
+
+
+State 144
+
+   20 funct_def: VOID ID L_PAREN R_PAREN $@5 compound_statement $@6 . $@7
+
+    $default  reduce using rule 19 ($@7)
+
+    $@7  go to state 166
+
+
+State 145
+
+   24 funct_def: VOID ID L_PAREN parameter_list R_PAREN $@8 compound_statement . $@9 $@10
+
+    $default  reduce using rule 22 ($@9)
+
+    $@9  go to state 167
+
+
+State 146
+
+   29 parameter_list: parameter_list COMMA scalar_type ID .
+   52 array_decl: ID . $@13 dim
+
+    ML_BRACE  reduce using rule 51 ($@13)
+    $default  reduce using rule 29 (parameter_list)
+
+    $@13  go to state 28
+
+
+State 147
+
+   30 parameter_list: parameter_list COMMA scalar_type array_decl .
+
+    $default  reduce using rule 30 (parameter_list)
+
+
+State 148
+
+   49 const_list: const_list COMMA ID ASSIGN_OP . sign_literal_const
+
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    SUB_OP       shift, and go to state 88
+
+    sign_literal_const  go to state 168
+    literal_const       go to state 65
+
+
+State 149
+
+   56 compound_statement: L_BRACE $@14 var_const_stmt_list . R_BRACE
+   57 var_const_stmt_list: var_const_stmt_list . statement
+   58                    | var_const_stmt_list . var_decl
+   59                    | var_const_stmt_list . const_decl
+
+    ID        shift, and go to state 169
+    READ      shift, and go to state 170
+    WHILE     shift, and go to state 171
+    DO        shift, and go to state 172
+    IF        shift, and go to state 173
+    FOR       shift, and go to state 174
+    INT       shift, and go to state 5
+    PRINT     shift, and go to state 175
+    BOOL      shift, and go to state 6
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CONTINUE  shift, and go to state 176
+    BREAK     shift, and go to state 177
+    RETURN    shift, and go to state 178
+    CONST     shift, and go to state 11
+    L_BRACE   shift, and go to state 82
+    R_BRACE   shift, and go to state 179
+
+    var_decl                   go to state 180
+    const_decl                 go to state 181
+    compound_statement         go to state 182
+    statement                  go to state 183
+    simple_statement           go to state 184
+    conditional_statement      go to state 185
+    while_statement            go to state 186
+    for_statement              go to state 187
+    function_invoke_statement  go to state 188
+    jump_statement             go to state 189
+    jump_loop_statement        go to state 190
+    variable_reference         go to state 191
+    array_list                 go to state 63
+    scalar_type                go to state 192
+
+
+State 150
+
+   16 funct_def: scalar_type ID L_PAREN parameter_list R_PAREN compound_statement $@4 .
+
+    $default  reduce using rule 16 (funct_def)
+
+
+State 151
+
+  171 element: ID L_PAREN logical_expression_list R_PAREN .
+
+    $default  reduce using rule 171 (element)
+
+
+State 152
+
+  173 logical_expression_list: logical_expression_list COMMA . logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    logical_expression     go to state 193
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 153
+
+  178 dimension: ML_BRACE Logical_expression . MR_BRACE
+
+    MR_BRACE  shift, and go to state 194
+
+
+State 154
+
+  177 dimension: dimension ML_BRACE . Logical_expression MR_BRACE
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 195
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 155
+
+  170 element: L_PAREN $@56 logical_expression R_PAREN .
+
+    $default  reduce using rule 170 (element)
+
+
+State 156
+
+  136 logical_expression: logical_expression OR_OP $@47 logical_term .
+  139 logical_term: logical_term . AND_OP $@48 logical_factor
+
+    AND_OP  shift, and go to state 93
+
+    $default  reduce using rule 136 (logical_expression)
+
+
+State 157
+
+  139 logical_term: logical_term AND_OP $@48 logical_factor .
+
+    $default  reduce using rule 139 (logical_term)
+
+
+State 158
+
+  153 arithmetic_expression: arithmetic_expression ADD_OP $@50 term .
+  158 term: term . MUL_OP $@52 factor
+  160     | term . DIV_OP $@53 factor
+  162     | term . MOD_OP $@54 factor
+
+    MUL_OP  shift, and go to state 103
+    DIV_OP  shift, and go to state 104
+    MOD_OP  shift, and go to state 105
+
+    $default  reduce using rule 153 (arithmetic_expression)
+
+
+State 159
+
+  155 arithmetic_expression: arithmetic_expression SUB_OP $@51 term .
+  158 term: term . MUL_OP $@52 factor
+  160     | term . DIV_OP $@53 factor
+  162     | term . MOD_OP $@54 factor
+
+    MUL_OP  shift, and go to state 103
+    DIV_OP  shift, and go to state 104
+    MOD_OP  shift, and go to state 105
+
+    $default  reduce using rule 155 (arithmetic_expression)
+
+
+State 160
+
+  158 term: term MUL_OP $@52 factor .
+
+    $default  reduce using rule 158 (term)
+
+
+State 161
+
+  160 term: term DIV_OP $@53 factor .
+
+    $default  reduce using rule 160 (term)
+
+
+State 162
+
+  162 term: term MOD_OP $@54 factor .
+
+    $default  reduce using rule 162 (term)
+
+
+State 163
+
+   53 dim: dim ML_BRACE INT_CONST MR_BRACE .
+
+    $default  reduce using rule 53 (dim)
+
+
+State 164
+
+   44 literal_list: literal_list COMMA . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 196
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 165
+
+   43 initial_array: $@11 L_BRACE literal_list R_BRACE .
+
+    $default  reduce using rule 43 (initial_array)
+
+
+State 166
+
+   20 funct_def: VOID ID L_PAREN R_PAREN $@5 compound_statement $@6 $@7 .
+
+    $default  reduce using rule 20 (funct_def)
+
+
+State 167
+
+   24 funct_def: VOID ID L_PAREN parameter_list R_PAREN $@8 compound_statement $@9 . $@10
+
+    $default  reduce using rule 23 ($@10)
+
+    $@10  go to state 197
+
+
+State 168
+
+   49 const_list: const_list COMMA ID ASSIGN_OP sign_literal_const .
+
+    $default  reduce using rule 49 (const_list)
+
+
+State 169
+
+  125 function_invoke_statement: ID . L_PAREN $@44 logical_expression_list R_PAREN SEMICOLON $@45
+  127                          | ID . L_PAREN R_PAREN SEMICOLON $@46
+  133 variable_reference: ID .
+  176 array_list: ID . $@57 dimension
+
+    L_PAREN  shift, and go to state 198
+
+    ML_BRACE  reduce using rule 175 ($@57)
+    $default  reduce using rule 133 (variable_reference)
+
+    $@57  go to state 86
+
+
+State 170
+
+   75 simple_statement: READ . variable_reference $@18 SEMICOLON $@19
+
+    ID  shift, and go to state 199
+
+    variable_reference  go to state 200
+    array_list          go to state 63
+
+
+State 171
+
+   84 while_statement: WHILE . L_PAREN Logical_expression $@22 R_PAREN L_BRACE $@23 var_const_stmt_list $@24 R_BRACE $@25
+
+    L_PAREN  shift, and go to state 201
+
+
+State 172
+
+   90 while_statement: DO . L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    L_BRACE  shift, and go to state 202
+
+
+State 173
+
+   77 conditional_statement: IF . L_PAREN Logical_expression R_PAREN $@20 L_BRACE var_const_stmt_list R_BRACE
+   79                      | IF . L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    L_PAREN  shift, and go to state 203
+
+
+State 174
+
+   92 for_statement: FOR . L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    L_PAREN  shift, and go to state 204
+
+
+State 175
+
+   72 simple_statement: PRINT . Logical_expression SEMICOLON $@17
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 205
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 176
+
+  130 jump_loop_statement: CONTINUE . SEMICOLON
+
+    SEMICOLON  shift, and go to state 206
+
+
+State 177
+
+  131 jump_loop_statement: BREAK . SEMICOLON
+
+    SEMICOLON  shift, and go to state 207
+
+
+State 178
+
+  128 jump_statement: RETURN . Logical_expression SEMICOLON
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 208
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 179
+
+   56 compound_statement: L_BRACE $@14 var_const_stmt_list R_BRACE .
+
+    $default  reduce using rule 56 (compound_statement)
+
+
+State 180
+
+   58 var_const_stmt_list: var_const_stmt_list var_decl .
+
+    $default  reduce using rule 58 (var_const_stmt_list)
+
+
+State 181
+
+   59 var_const_stmt_list: var_const_stmt_list const_decl .
+
+    $default  reduce using rule 59 (var_const_stmt_list)
+
+
+State 182
+
+   61 statement: compound_statement .
+
+    $default  reduce using rule 61 (statement)
+
+
+State 183
+
+   57 var_const_stmt_list: var_const_stmt_list statement .
+
+    $default  reduce using rule 57 (var_const_stmt_list)
+
+
+State 184
+
+   62 statement: simple_statement .
+
+    $default  reduce using rule 62 (statement)
+
+
+State 185
+
+   63 statement: conditional_statement .
+
+    $default  reduce using rule 63 (statement)
+
+
+State 186
+
+   64 statement: while_statement .
+
+    $default  reduce using rule 64 (statement)
+
+
+State 187
+
+   65 statement: for_statement .
+
+    $default  reduce using rule 65 (statement)
+
+
+State 188
+
+   66 statement: function_invoke_statement .
+
+    $default  reduce using rule 66 (statement)
+
+
+State 189
+
+   67 statement: jump_statement .
+
+    $default  reduce using rule 67 (statement)
+
+
+State 190
+
+  129 jump_statement: jump_loop_statement .
+
+    $default  reduce using rule 129 (jump_statement)
+
+
+State 191
+
+   70 simple_statement: variable_reference . $@15 ASSIGN_OP $@16 Logical_expression SEMICOLON
+
+    $default  reduce using rule 68 ($@15)
+
+    $@15  go to state 209
+
+
+State 192
+
+   33 var_decl: scalar_type . identifier_list SEMICOLON
+
+    ID  shift, and go to state 210
+
+    identifier_list  go to state 21
+    array_decl       go to state 22
+
+
+State 193
+
+  136 logical_expression: logical_expression . OR_OP $@47 logical_term
+  173 logical_expression_list: logical_expression_list COMMA logical_expression .
+
+    OR_OP  shift, and go to state 92
+
+    $default  reduce using rule 173 (logical_expression_list)
+
+
+State 194
+
+  178 dimension: ML_BRACE Logical_expression MR_BRACE .
+
+    $default  reduce using rule 178 (dimension)
+
+
+State 195
+
+  177 dimension: dimension ML_BRACE Logical_expression . MR_BRACE
+
+    MR_BRACE  shift, and go to state 211
+
+
+State 196
+
+   44 literal_list: literal_list COMMA Logical_expression .
+
+    $default  reduce using rule 44 (literal_list)
+
+
+State 197
+
+   24 funct_def: VOID ID L_PAREN parameter_list R_PAREN $@8 compound_statement $@9 $@10 .
+
+    $default  reduce using rule 24 (funct_def)
+
+
+State 198
+
+  125 function_invoke_statement: ID L_PAREN . $@44 logical_expression_list R_PAREN SEMICOLON $@45
+  127                          | ID L_PAREN . R_PAREN SEMICOLON $@46
+
+    R_PAREN  shift, and go to state 212
+
+    $default  reduce using rule 123 ($@44)
+
+    $@44  go to state 213
+
+
+State 199
+
+  133 variable_reference: ID .
+  176 array_list: ID . $@57 dimension
+
+    ML_BRACE  reduce using rule 175 ($@57)
+    $default  reduce using rule 133 (variable_reference)
+
+    $@57  go to state 86
+
+
+State 200
+
+   75 simple_statement: READ variable_reference . $@18 SEMICOLON $@19
+
+    $default  reduce using rule 73 ($@18)
+
+    $@18  go to state 214
+
+
+State 201
+
+   84 while_statement: WHILE L_PAREN . Logical_expression $@22 R_PAREN L_BRACE $@23 var_const_stmt_list $@24 R_BRACE $@25
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 215
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 202
+
+   90 while_statement: DO L_BRACE . $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    $default  reduce using rule 85 ($@26)
+
+    $@26  go to state 216
+
+
+State 203
+
+   77 conditional_statement: IF L_PAREN . Logical_expression R_PAREN $@20 L_BRACE var_const_stmt_list R_BRACE
+   79                      | IF L_PAREN . Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 217
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 204
+
+   92 for_statement: FOR L_PAREN . initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    $default  reduce using rule 94 (initial_expression_list)
+
+    initial_expression_list  go to state 218
+    initial_expression       go to state 219
+    variable_reference       go to state 220
+    Logical_expression       go to state 221
+    logical_expression       go to state 55
+    logical_term             go to state 56
+    logical_factor           go to state 57
+    relation_expression      go to state 58
+    arithmetic_expression    go to state 59
+    term                     go to state 60
+    factor                   go to state 61
+    element                  go to state 62
+    array_list               go to state 63
+    sign_literal_const       go to state 64
+    literal_const            go to state 65
+
+
+State 205
+
+   72 simple_statement: PRINT Logical_expression . SEMICOLON $@17
+
+    SEMICOLON  shift, and go to state 222
+
+
+State 206
+
+  130 jump_loop_statement: CONTINUE SEMICOLON .
+
+    $default  reduce using rule 130 (jump_loop_statement)
+
+
+State 207
+
+  131 jump_loop_statement: BREAK SEMICOLON .
+
+    $default  reduce using rule 131 (jump_loop_statement)
+
+
+State 208
+
+  128 jump_statement: RETURN Logical_expression . SEMICOLON
+
+    SEMICOLON  shift, and go to state 223
+
+
+State 209
+
+   70 simple_statement: variable_reference $@15 . ASSIGN_OP $@16 Logical_expression SEMICOLON
+
+    ASSIGN_OP  shift, and go to state 224
+
+
+State 210
+
+   40 identifier_list: ID . ASSIGN_OP Logical_expression
+   41                | ID .
+   52 array_decl: ID . $@13 dim
+
+    ASSIGN_OP  shift, and go to state 27
+
+    ML_BRACE  reduce using rule 51 ($@13)
+    $default  reduce using rule 41 (identifier_list)
+
+    $@13  go to state 28
+
+
+State 211
+
+  177 dimension: dimension ML_BRACE Logical_expression MR_BRACE .
+
+    $default  reduce using rule 177 (dimension)
+
+
+State 212
+
+  127 function_invoke_statement: ID L_PAREN R_PAREN . SEMICOLON $@46
+
+    SEMICOLON  shift, and go to state 225
+
+
+State 213
+
+  125 function_invoke_statement: ID L_PAREN $@44 . logical_expression_list R_PAREN SEMICOLON $@45
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference       go to state 53
+    logical_expression       go to state 122
+    logical_term             go to state 56
+    logical_factor           go to state 57
+    relation_expression      go to state 58
+    arithmetic_expression    go to state 59
+    term                     go to state 60
+    factor                   go to state 61
+    element                  go to state 62
+    logical_expression_list  go to state 226
+    array_list               go to state 63
+    sign_literal_const       go to state 64
+    literal_const            go to state 65
+
+
+State 214
+
+   75 simple_statement: READ variable_reference $@18 . SEMICOLON $@19
+
+    SEMICOLON  shift, and go to state 227
+
+
+State 215
+
+   84 while_statement: WHILE L_PAREN Logical_expression . $@22 R_PAREN L_BRACE $@23 var_const_stmt_list $@24 R_BRACE $@25
+
+    $default  reduce using rule 80 ($@22)
+
+    $@22  go to state 228
+
+
+State 216
+
+   90 while_statement: DO L_BRACE $@26 . $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    $default  reduce using rule 86 ($@27)
+
+    $@27  go to state 229
+
+
+State 217
+
+   77 conditional_statement: IF L_PAREN Logical_expression . R_PAREN $@20 L_BRACE var_const_stmt_list R_BRACE
+   79                      | IF L_PAREN Logical_expression . $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    R_PAREN  shift, and go to state 230
+
+    R_PAREN  [reduce using rule 78 ($@21)]
+
+    $@21  go to state 231
+
+
+State 218
+
+   92 for_statement: FOR L_PAREN initial_expression_list . SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    SEMICOLON  shift, and go to state 232
+
+
+State 219
+
+   93 initial_expression_list: initial_expression .
+   97 initial_expression: initial_expression . COMMA variable_reference $@32 ASSIGN_OP $@33 Logical_expression
+   98                   | initial_expression . COMMA Logical_expression
+
+    COMMA  shift, and go to state 233
+
+    $default  reduce using rule 93 (initial_expression_list)
+
+
+State 220
+
+  102 initial_expression: variable_reference . $@34 ASSIGN_OP $@35 Logical_expression
+  168 element: variable_reference .
+
+    ASSIGN_OP  reduce using rule 100 ($@34)
+    $default   reduce using rule 168 (element)
+
+    $@34  go to state 234
+
+
+State 221
+
+   99 initial_expression: Logical_expression .
+
+    $default  reduce using rule 99 (initial_expression)
+
+
+State 222
+
+   72 simple_statement: PRINT Logical_expression SEMICOLON . $@17
+
+    $default  reduce using rule 71 ($@17)
+
+    $@17  go to state 235
+
+
+State 223
+
+  128 jump_statement: RETURN Logical_expression SEMICOLON .
+
+    $default  reduce using rule 128 (jump_statement)
+
+
+State 224
+
+   70 simple_statement: variable_reference $@15 ASSIGN_OP . $@16 Logical_expression SEMICOLON
+
+    $default  reduce using rule 69 ($@16)
+
+    $@16  go to state 236
+
+
+State 225
+
+  127 function_invoke_statement: ID L_PAREN R_PAREN SEMICOLON . $@46
+
+    $default  reduce using rule 126 ($@46)
+
+    $@46  go to state 237
+
+
+State 226
+
+  125 function_invoke_statement: ID L_PAREN $@44 logical_expression_list . R_PAREN SEMICOLON $@45
+  173 logical_expression_list: logical_expression_list . COMMA logical_expression
+
+    R_PAREN  shift, and go to state 238
+    COMMA    shift, and go to state 152
+
+
+State 227
+
+   75 simple_statement: READ variable_reference $@18 SEMICOLON . $@19
+
+    $default  reduce using rule 74 ($@19)
+
+    $@19  go to state 239
+
+
+State 228
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 . R_PAREN L_BRACE $@23 var_const_stmt_list $@24 R_BRACE $@25
+
+    R_PAREN  shift, and go to state 240
+
+
+State 229
+
+   90 while_statement: DO L_BRACE $@26 $@27 . var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    $default  reduce using rule 60 (var_const_stmt_list)
+
+    var_const_stmt_list  go to state 241
+
+
+State 230
+
+   77 conditional_statement: IF L_PAREN Logical_expression R_PAREN . $@20 L_BRACE var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 76 ($@20)
+
+    $@20  go to state 242
+
+
+State 231
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 . R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    R_PAREN  shift, and go to state 243
+
+
+State 232
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON . control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    $default  reduce using rule 104 (control_expression_list)
+
+    control_expression_list  go to state 244
+    control_expression       go to state 245
+    variable_reference       go to state 246
+    Logical_expression       go to state 247
+    logical_expression       go to state 55
+    logical_term             go to state 56
+    logical_factor           go to state 57
+    relation_expression      go to state 58
+    arithmetic_expression    go to state 59
+    term                     go to state 60
+    factor                   go to state 61
+    element                  go to state 62
+    array_list               go to state 63
+    sign_literal_const       go to state 64
+    literal_const            go to state 65
+
+
+State 233
+
+   97 initial_expression: initial_expression COMMA . variable_reference $@32 ASSIGN_OP $@33 Logical_expression
+   98                   | initial_expression COMMA . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 248
+    Logical_expression     go to state 249
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 234
+
+  102 initial_expression: variable_reference $@34 . ASSIGN_OP $@35 Logical_expression
+
+    ASSIGN_OP  shift, and go to state 250
+
+
+State 235
+
+   72 simple_statement: PRINT Logical_expression SEMICOLON $@17 .
+
+    $default  reduce using rule 72 (simple_statement)
+
+
+State 236
+
+   70 simple_statement: variable_reference $@15 ASSIGN_OP $@16 . Logical_expression SEMICOLON
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 251
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 237
+
+  127 function_invoke_statement: ID L_PAREN R_PAREN SEMICOLON $@46 .
+
+    $default  reduce using rule 127 (function_invoke_statement)
+
+
+State 238
+
+  125 function_invoke_statement: ID L_PAREN $@44 logical_expression_list R_PAREN . SEMICOLON $@45
+
+    SEMICOLON  shift, and go to state 252
+
+
+State 239
+
+   75 simple_statement: READ variable_reference $@18 SEMICOLON $@19 .
+
+    $default  reduce using rule 75 (simple_statement)
+
+
+State 240
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN . L_BRACE $@23 var_const_stmt_list $@24 R_BRACE $@25
+
+    L_BRACE  shift, and go to state 253
+
+
+State 241
+
+   57 var_const_stmt_list: var_const_stmt_list . statement
+   58                    | var_const_stmt_list . var_decl
+   59                    | var_const_stmt_list . const_decl
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list . $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    ID        shift, and go to state 169
+    READ      shift, and go to state 170
+    WHILE     shift, and go to state 171
+    DO        shift, and go to state 172
+    IF        shift, and go to state 173
+    FOR       shift, and go to state 174
+    INT       shift, and go to state 5
+    PRINT     shift, and go to state 175
+    BOOL      shift, and go to state 6
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CONTINUE  shift, and go to state 176
+    BREAK     shift, and go to state 177
+    RETURN    shift, and go to state 178
+    CONST     shift, and go to state 11
+    L_BRACE   shift, and go to state 82
+
+    $default  reduce using rule 87 ($@28)
+
+    var_decl                   go to state 180
+    const_decl                 go to state 181
+    compound_statement         go to state 182
+    statement                  go to state 183
+    simple_statement           go to state 184
+    conditional_statement      go to state 185
+    while_statement            go to state 186
+    $@28                       go to state 254
+    for_statement              go to state 187
+    function_invoke_statement  go to state 188
+    jump_statement             go to state 189
+    jump_loop_statement        go to state 190
+    variable_reference         go to state 191
+    array_list                 go to state 63
+    scalar_type                go to state 192
+
+
+State 242
+
+   77 conditional_statement: IF L_PAREN Logical_expression R_PAREN $@20 . L_BRACE var_const_stmt_list R_BRACE
+
+    L_BRACE  shift, and go to state 255
+
+
+State 243
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN . L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    L_BRACE  shift, and go to state 256
+
+
+State 244
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list . SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    SEMICOLON  shift, and go to state 257
+
+
+State 245
+
+  103 control_expression_list: control_expression .
+  107 control_expression: control_expression . COMMA variable_reference $@36 ASSIGN_OP $@37 Logical_expression
+  108                   | control_expression . COMMA Logical_expression
+
+    COMMA  shift, and go to state 258
+
+    $default  reduce using rule 103 (control_expression_list)
+
+
+State 246
+
+  112 control_expression: variable_reference . $@38 ASSIGN_OP $@39 Logical_expression
+  168 element: variable_reference .
+
+    ASSIGN_OP  reduce using rule 110 ($@38)
+    $default   reduce using rule 168 (element)
+
+    $@38  go to state 259
+
+
+State 247
+
+  109 control_expression: Logical_expression .
+
+    $default  reduce using rule 109 (control_expression)
+
+
+State 248
+
+   97 initial_expression: initial_expression COMMA variable_reference . $@32 ASSIGN_OP $@33 Logical_expression
+  168 element: variable_reference .
+
+    ASSIGN_OP  reduce using rule 95 ($@32)
+    $default   reduce using rule 168 (element)
+
+    $@32  go to state 260
+
+
+State 249
+
+   98 initial_expression: initial_expression COMMA Logical_expression .
+
+    $default  reduce using rule 98 (initial_expression)
+
+
+State 250
+
+  102 initial_expression: variable_reference $@34 ASSIGN_OP . $@35 Logical_expression
+
+    $default  reduce using rule 101 ($@35)
+
+    $@35  go to state 261
+
+
+State 251
+
+   70 simple_statement: variable_reference $@15 ASSIGN_OP $@16 Logical_expression . SEMICOLON
+
+    SEMICOLON  shift, and go to state 262
+
+
+State 252
+
+  125 function_invoke_statement: ID L_PAREN $@44 logical_expression_list R_PAREN SEMICOLON . $@45
+
+    $default  reduce using rule 124 ($@45)
+
+    $@45  go to state 263
+
+
+State 253
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN L_BRACE . $@23 var_const_stmt_list $@24 R_BRACE $@25
+
+    $default  reduce using rule 81 ($@23)
+
+    $@23  go to state 264
+
+
+State 254
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 . R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    R_BRACE  shift, and go to state 265
+
+
+State 255
+
+   77 conditional_statement: IF L_PAREN Logical_expression R_PAREN $@20 L_BRACE . var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 60 (var_const_stmt_list)
+
+    var_const_stmt_list  go to state 266
+
+
+State 256
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE . var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 60 (var_const_stmt_list)
+
+    var_const_stmt_list  go to state 267
+
+
+State 257
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON . increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    $default  reduce using rule 114 (increment_expression_list)
+
+    increment_expression_list  go to state 268
+    increment_expression       go to state 269
+    variable_reference         go to state 270
+    Logical_expression         go to state 271
+    logical_expression         go to state 55
+    logical_term               go to state 56
+    logical_factor             go to state 57
+    relation_expression        go to state 58
+    arithmetic_expression      go to state 59
+    term                       go to state 60
+    factor                     go to state 61
+    element                    go to state 62
+    array_list                 go to state 63
+    sign_literal_const         go to state 64
+    literal_const              go to state 65
+
+
+State 258
+
+  107 control_expression: control_expression COMMA . variable_reference $@36 ASSIGN_OP $@37 Logical_expression
+  108                   | control_expression COMMA . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 272
+    Logical_expression     go to state 273
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 259
+
+  112 control_expression: variable_reference $@38 . ASSIGN_OP $@39 Logical_expression
+
+    ASSIGN_OP  shift, and go to state 274
+
+
+State 260
+
+   97 initial_expression: initial_expression COMMA variable_reference $@32 . ASSIGN_OP $@33 Logical_expression
+
+    ASSIGN_OP  shift, and go to state 275
+
+
+State 261
+
+  102 initial_expression: variable_reference $@34 ASSIGN_OP $@35 . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 276
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 262
+
+   70 simple_statement: variable_reference $@15 ASSIGN_OP $@16 Logical_expression SEMICOLON .
+
+    $default  reduce using rule 70 (simple_statement)
+
+
+State 263
+
+  125 function_invoke_statement: ID L_PAREN $@44 logical_expression_list R_PAREN SEMICOLON $@45 .
+
+    $default  reduce using rule 125 (function_invoke_statement)
+
+
+State 264
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN L_BRACE $@23 . var_const_stmt_list $@24 R_BRACE $@25
+
+    $default  reduce using rule 60 (var_const_stmt_list)
+
+    var_const_stmt_list  go to state 277
+
+
+State 265
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE . WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    WHILE  shift, and go to state 278
+
+
+State 266
+
+   57 var_const_stmt_list: var_const_stmt_list . statement
+   58                    | var_const_stmt_list . var_decl
+   59                    | var_const_stmt_list . const_decl
+   77 conditional_statement: IF L_PAREN Logical_expression R_PAREN $@20 L_BRACE var_const_stmt_list . R_BRACE
+
+    ID        shift, and go to state 169
+    READ      shift, and go to state 170
+    WHILE     shift, and go to state 171
+    DO        shift, and go to state 172
+    IF        shift, and go to state 173
+    FOR       shift, and go to state 174
+    INT       shift, and go to state 5
+    PRINT     shift, and go to state 175
+    BOOL      shift, and go to state 6
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CONTINUE  shift, and go to state 176
+    BREAK     shift, and go to state 177
+    RETURN    shift, and go to state 178
+    CONST     shift, and go to state 11
+    L_BRACE   shift, and go to state 82
+    R_BRACE   shift, and go to state 279
+
+    var_decl                   go to state 180
+    const_decl                 go to state 181
+    compound_statement         go to state 182
+    statement                  go to state 183
+    simple_statement           go to state 184
+    conditional_statement      go to state 185
+    while_statement            go to state 186
+    for_statement              go to state 187
+    function_invoke_statement  go to state 188
+    jump_statement             go to state 189
+    jump_loop_statement        go to state 190
+    variable_reference         go to state 191
+    array_list                 go to state 63
+    scalar_type                go to state 192
+
+
+State 267
+
+   57 var_const_stmt_list: var_const_stmt_list . statement
+   58                    | var_const_stmt_list . var_decl
+   59                    | var_const_stmt_list . const_decl
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list . R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    ID        shift, and go to state 169
+    READ      shift, and go to state 170
+    WHILE     shift, and go to state 171
+    DO        shift, and go to state 172
+    IF        shift, and go to state 173
+    FOR       shift, and go to state 174
+    INT       shift, and go to state 5
+    PRINT     shift, and go to state 175
+    BOOL      shift, and go to state 6
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CONTINUE  shift, and go to state 176
+    BREAK     shift, and go to state 177
+    RETURN    shift, and go to state 178
+    CONST     shift, and go to state 11
+    L_BRACE   shift, and go to state 82
+    R_BRACE   shift, and go to state 280
+
+    var_decl                   go to state 180
+    const_decl                 go to state 181
+    compound_statement         go to state 182
+    statement                  go to state 183
+    simple_statement           go to state 184
+    conditional_statement      go to state 185
+    while_statement            go to state 186
+    for_statement              go to state 187
+    function_invoke_statement  go to state 188
+    jump_statement             go to state 189
+    jump_loop_statement        go to state 190
+    variable_reference         go to state 191
+    array_list                 go to state 63
+    scalar_type                go to state 192
+
+
+State 268
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list . R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    R_PAREN  shift, and go to state 281
+
+
+State 269
+
+  113 increment_expression_list: increment_expression .
+  117 increment_expression: increment_expression . COMMA variable_reference $@40 ASSIGN_OP $@41 Logical_expression
+  118                     | increment_expression . COMMA Logical_expression
+
+    COMMA  shift, and go to state 282
+
+    $default  reduce using rule 113 (increment_expression_list)
+
+
+State 270
+
+  122 increment_expression: variable_reference . $@42 ASSIGN_OP $@43 Logical_expression
+  168 element: variable_reference .
+
+    ASSIGN_OP  reduce using rule 120 ($@42)
+    $default   reduce using rule 168 (element)
+
+    $@42  go to state 283
+
+
+State 271
+
+  119 increment_expression: Logical_expression .
+
+    $default  reduce using rule 119 (increment_expression)
+
+
+State 272
+
+  107 control_expression: control_expression COMMA variable_reference . $@36 ASSIGN_OP $@37 Logical_expression
+  168 element: variable_reference .
+
+    ASSIGN_OP  reduce using rule 105 ($@36)
+    $default   reduce using rule 168 (element)
+
+    $@36  go to state 284
+
+
+State 273
+
+  108 control_expression: control_expression COMMA Logical_expression .
+
+    $default  reduce using rule 108 (control_expression)
+
+
+State 274
+
+  112 control_expression: variable_reference $@38 ASSIGN_OP . $@39 Logical_expression
+
+    $default  reduce using rule 111 ($@39)
+
+    $@39  go to state 285
+
+
+State 275
+
+   97 initial_expression: initial_expression COMMA variable_reference $@32 ASSIGN_OP . $@33 Logical_expression
+
+    $default  reduce using rule 96 ($@33)
+
+    $@33  go to state 286
+
+
+State 276
+
+  102 initial_expression: variable_reference $@34 ASSIGN_OP $@35 Logical_expression .
+
+    $default  reduce using rule 102 (initial_expression)
+
+
+State 277
+
+   57 var_const_stmt_list: var_const_stmt_list . statement
+   58                    | var_const_stmt_list . var_decl
+   59                    | var_const_stmt_list . const_decl
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN L_BRACE $@23 var_const_stmt_list . $@24 R_BRACE $@25
+
+    ID        shift, and go to state 169
+    READ      shift, and go to state 170
+    WHILE     shift, and go to state 171
+    DO        shift, and go to state 172
+    IF        shift, and go to state 173
+    FOR       shift, and go to state 174
+    INT       shift, and go to state 5
+    PRINT     shift, and go to state 175
+    BOOL      shift, and go to state 6
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CONTINUE  shift, and go to state 176
+    BREAK     shift, and go to state 177
+    RETURN    shift, and go to state 178
+    CONST     shift, and go to state 11
+    L_BRACE   shift, and go to state 82
+
+    $default  reduce using rule 82 ($@24)
+
+    var_decl                   go to state 180
+    const_decl                 go to state 181
+    compound_statement         go to state 182
+    statement                  go to state 183
+    simple_statement           go to state 184
+    conditional_statement      go to state 185
+    while_statement            go to state 186
+    $@24                       go to state 287
+    for_statement              go to state 187
+    function_invoke_statement  go to state 188
+    jump_statement             go to state 189
+    jump_loop_statement        go to state 190
+    variable_reference         go to state 191
+    array_list                 go to state 63
+    scalar_type                go to state 192
+
+
+State 278
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE . L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    L_PAREN  shift, and go to state 288
+
+
+State 279
+
+   77 conditional_statement: IF L_PAREN Logical_expression R_PAREN $@20 L_BRACE var_const_stmt_list R_BRACE .
+
+    $default  reduce using rule 77 (conditional_statement)
+
+
+State 280
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE . ELSE L_BRACE var_const_stmt_list R_BRACE
+
+    ELSE  shift, and go to state 289
+
+
+State 281
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN . $@31 L_BRACE var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 91 ($@31)
+
+    $@31  go to state 290
+
+
+State 282
+
+  117 increment_expression: increment_expression COMMA . variable_reference $@40 ASSIGN_OP $@41 Logical_expression
+  118                     | increment_expression COMMA . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 291
+    Logical_expression     go to state 292
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 283
+
+  122 increment_expression: variable_reference $@42 . ASSIGN_OP $@43 Logical_expression
+
+    ASSIGN_OP  shift, and go to state 293
+
+
+State 284
+
+  107 control_expression: control_expression COMMA variable_reference $@36 . ASSIGN_OP $@37 Logical_expression
+
+    ASSIGN_OP  shift, and go to state 294
+
+
+State 285
+
+  112 control_expression: variable_reference $@38 ASSIGN_OP $@39 . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 295
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 286
+
+   97 initial_expression: initial_expression COMMA variable_reference $@32 ASSIGN_OP $@33 . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 296
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 287
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN L_BRACE $@23 var_const_stmt_list $@24 . R_BRACE $@25
+
+    R_BRACE  shift, and go to state 297
+
+
+State 288
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN . Logical_expression $@29 R_PAREN SEMICOLON $@30
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 298
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 289
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE . L_BRACE var_const_stmt_list R_BRACE
+
+    L_BRACE  shift, and go to state 299
+
+
+State 290
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 . L_BRACE var_const_stmt_list R_BRACE
+
+    L_BRACE  shift, and go to state 300
+
+
+State 291
+
+  117 increment_expression: increment_expression COMMA variable_reference . $@40 ASSIGN_OP $@41 Logical_expression
+  168 element: variable_reference .
+
+    ASSIGN_OP  reduce using rule 115 ($@40)
+    $default   reduce using rule 168 (element)
+
+    $@40  go to state 301
+
+
+State 292
+
+  118 increment_expression: increment_expression COMMA Logical_expression .
+
+    $default  reduce using rule 118 (increment_expression)
+
+
+State 293
+
+  122 increment_expression: variable_reference $@42 ASSIGN_OP . $@43 Logical_expression
+
+    $default  reduce using rule 121 ($@43)
+
+    $@43  go to state 302
+
+
+State 294
+
+  107 control_expression: control_expression COMMA variable_reference $@36 ASSIGN_OP . $@37 Logical_expression
+
+    $default  reduce using rule 106 ($@37)
+
+    $@37  go to state 303
+
+
+State 295
+
+  112 control_expression: variable_reference $@38 ASSIGN_OP $@39 Logical_expression .
+
+    $default  reduce using rule 112 (control_expression)
+
+
+State 296
+
+   97 initial_expression: initial_expression COMMA variable_reference $@32 ASSIGN_OP $@33 Logical_expression .
+
+    $default  reduce using rule 97 (initial_expression)
+
+
+State 297
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN L_BRACE $@23 var_const_stmt_list $@24 R_BRACE . $@25
+
+    $default  reduce using rule 83 ($@25)
+
+    $@25  go to state 304
+
+
+State 298
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression . $@29 R_PAREN SEMICOLON $@30
+
+    $default  reduce using rule 88 ($@29)
+
+    $@29  go to state 305
+
+
+State 299
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE . var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 60 (var_const_stmt_list)
+
+    var_const_stmt_list  go to state 306
+
+
+State 300
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE . var_const_stmt_list R_BRACE
+
+    $default  reduce using rule 60 (var_const_stmt_list)
+
+    var_const_stmt_list  go to state 307
+
+
+State 301
+
+  117 increment_expression: increment_expression COMMA variable_reference $@40 . ASSIGN_OP $@41 Logical_expression
+
+    ASSIGN_OP  shift, and go to state 308
+
+
+State 302
+
+  122 increment_expression: variable_reference $@42 ASSIGN_OP $@43 . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 309
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 303
+
+  107 control_expression: control_expression COMMA variable_reference $@36 ASSIGN_OP $@37 . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 310
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 304
+
+   84 while_statement: WHILE L_PAREN Logical_expression $@22 R_PAREN L_BRACE $@23 var_const_stmt_list $@24 R_BRACE $@25 .
+
+    $default  reduce using rule 84 (while_statement)
+
+
+State 305
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 . R_PAREN SEMICOLON $@30
+
+    R_PAREN  shift, and go to state 311
+
+
+State 306
+
+   57 var_const_stmt_list: var_const_stmt_list . statement
+   58                    | var_const_stmt_list . var_decl
+   59                    | var_const_stmt_list . const_decl
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list . R_BRACE
+
+    ID        shift, and go to state 169
+    READ      shift, and go to state 170
+    WHILE     shift, and go to state 171
+    DO        shift, and go to state 172
+    IF        shift, and go to state 173
+    FOR       shift, and go to state 174
+    INT       shift, and go to state 5
+    PRINT     shift, and go to state 175
+    BOOL      shift, and go to state 6
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CONTINUE  shift, and go to state 176
+    BREAK     shift, and go to state 177
+    RETURN    shift, and go to state 178
+    CONST     shift, and go to state 11
+    L_BRACE   shift, and go to state 82
+    R_BRACE   shift, and go to state 312
+
+    var_decl                   go to state 180
+    const_decl                 go to state 181
+    compound_statement         go to state 182
+    statement                  go to state 183
+    simple_statement           go to state 184
+    conditional_statement      go to state 185
+    while_statement            go to state 186
+    for_statement              go to state 187
+    function_invoke_statement  go to state 188
+    jump_statement             go to state 189
+    jump_loop_statement        go to state 190
+    variable_reference         go to state 191
+    array_list                 go to state 63
+    scalar_type                go to state 192
+
+
+State 307
+
+   57 var_const_stmt_list: var_const_stmt_list . statement
+   58                    | var_const_stmt_list . var_decl
+   59                    | var_const_stmt_list . const_decl
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list . R_BRACE
+
+    ID        shift, and go to state 169
+    READ      shift, and go to state 170
+    WHILE     shift, and go to state 171
+    DO        shift, and go to state 172
+    IF        shift, and go to state 173
+    FOR       shift, and go to state 174
+    INT       shift, and go to state 5
+    PRINT     shift, and go to state 175
+    BOOL      shift, and go to state 6
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CONTINUE  shift, and go to state 176
+    BREAK     shift, and go to state 177
+    RETURN    shift, and go to state 178
+    CONST     shift, and go to state 11
+    L_BRACE   shift, and go to state 82
+    R_BRACE   shift, and go to state 313
+
+    var_decl                   go to state 180
+    const_decl                 go to state 181
+    compound_statement         go to state 182
+    statement                  go to state 183
+    simple_statement           go to state 184
+    conditional_statement      go to state 185
+    while_statement            go to state 186
+    for_statement              go to state 187
+    function_invoke_statement  go to state 188
+    jump_statement             go to state 189
+    jump_loop_statement        go to state 190
+    variable_reference         go to state 191
+    array_list                 go to state 63
+    scalar_type                go to state 192
+
+
+State 308
+
+  117 increment_expression: increment_expression COMMA variable_reference $@40 ASSIGN_OP . $@41 Logical_expression
+
+    $default  reduce using rule 116 ($@41)
+
+    $@41  go to state 314
+
+
+State 309
+
+  122 increment_expression: variable_reference $@42 ASSIGN_OP $@43 Logical_expression .
+
+    $default  reduce using rule 122 (increment_expression)
+
+
+State 310
+
+  107 control_expression: control_expression COMMA variable_reference $@36 ASSIGN_OP $@37 Logical_expression .
+
+    $default  reduce using rule 107 (control_expression)
+
+
+State 311
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN . SEMICOLON $@30
+
+    SEMICOLON  shift, and go to state 315
+
+
+State 312
+
+   79 conditional_statement: IF L_PAREN Logical_expression $@21 R_PAREN L_BRACE var_const_stmt_list R_BRACE ELSE L_BRACE var_const_stmt_list R_BRACE .
+
+    $default  reduce using rule 79 (conditional_statement)
+
+
+State 313
+
+   92 for_statement: FOR L_PAREN initial_expression_list SEMICOLON control_expression_list SEMICOLON increment_expression_list R_PAREN $@31 L_BRACE var_const_stmt_list R_BRACE .
+
+    $default  reduce using rule 92 (for_statement)
+
+
+State 314
+
+  117 increment_expression: increment_expression COMMA variable_reference $@40 ASSIGN_OP $@41 . Logical_expression
+
+    ID           shift, and go to state 43
+    INT_CONST    shift, and go to state 44
+    FLOAT_CONST  shift, and go to state 45
+    SCIENTIFIC   shift, and go to state 46
+    STR_CONST    shift, and go to state 47
+    TRUE         shift, and go to state 48
+    FALSE        shift, and go to state 49
+    L_PAREN      shift, and go to state 50
+    SUB_OP       shift, and go to state 51
+    NOT_OP       shift, and go to state 52
+
+    variable_reference     go to state 53
+    Logical_expression     go to state 316
+    logical_expression     go to state 55
+    logical_term           go to state 56
+    logical_factor         go to state 57
+    relation_expression    go to state 58
+    arithmetic_expression  go to state 59
+    term                   go to state 60
+    factor                 go to state 61
+    element                go to state 62
+    array_list             go to state 63
+    sign_literal_const     go to state 64
+    literal_const          go to state 65
+
+
+State 315
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON . $@30
+
+    $default  reduce using rule 89 ($@30)
+
+    $@30  go to state 317
+
+
+State 316
+
+  117 increment_expression: increment_expression COMMA variable_reference $@40 ASSIGN_OP $@41 Logical_expression .
+
+    $default  reduce using rule 117 (increment_expression)
+
+
+State 317
+
+   90 while_statement: DO L_BRACE $@26 $@27 var_const_stmt_list $@28 R_BRACE WHILE L_PAREN Logical_expression $@29 R_PAREN SEMICOLON $@30 .
+
+    $default  reduce using rule 90 (while_statement)
